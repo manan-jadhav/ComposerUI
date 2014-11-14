@@ -1,19 +1,33 @@
-<?php
+<?php 
+namespace ComposerUI\Tests;
 
-class TestCase extends Illuminate\Foundation\Testing\TestCase {
+use Composer\Util\Filesystem;
 
-	/**
-	 * Creates the application.
-	 *
-	 * @return \Symfony\Component\HttpKernel\HttpKernelInterface
-	 */
-	public function createApplication()
-	{
-		$unitTesting = true;
+class TestCase extends \Illuminate\Foundation\Testing\TestCase
+{
 
-		$testEnvironment = 'testing';
+    /**
+     * Creates the application.
+     *
+     * @return \Symfony\Component\HttpKernel\HttpKernelInterface
+     */
+    public function createApplication()
+    {
+        $unitTesting = true;
 
-		return require __DIR__.'/../../bootstrap/start.php';
-	}
+        $testEnvironment = 'testing';
+
+        return require __DIR__ . '/../../bootstrap/start.php';
+    }
+
+    protected function ensureDirectoryExistsAndClear($directory)
+    {
+        $fs = new Filesystem();
+        if (is_dir($directory))
+        {
+            $fs->removeDirectory($directory);
+        }
+        mkdir($directory, 0777, true);
+    }
 
 }
